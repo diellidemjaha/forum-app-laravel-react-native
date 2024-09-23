@@ -39,7 +39,7 @@ export default function Profile() {
             <Text style={styles.username}>{user?.name}</Text>
             <Text style={styles.email}>{user?.email}</Text>
         <TouchableOpacity style={styles.logoutButton}
-        onPress={handleLogout} ><Text>Logout</Text></TouchableOpacity>
+        onPress={handleLogout} > <Text style={styles.buttontxt}>Logout</Text></TouchableOpacity>
         </View>
     )
 }
@@ -54,11 +54,16 @@ const styles = StyleSheet.create({
     logoutButton: {
         padding: 20,
         marginTop: 20,
-        backgroundColor: 'red',
-        color: 'white',
+        backgroundColor: 'blue',
+        color: '#333',
         borderRadius:25,
         width: '25%',
         alignItems: 'center'
 
+    },
+    buttontxt: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: 'white',
     }
 })

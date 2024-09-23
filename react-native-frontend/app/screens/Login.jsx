@@ -46,7 +46,7 @@ export default function Login() {
 
     return(
             <ScrollView>
-        <SafeAreaView style={{flex:1,padding:20,backgroundColor: 'aqua'}}>
+        <SafeAreaView style={{flex:1,padding:20,backgroundColor: 'aqua', height: '100%'}}>
             <Text style={{marginTop: 50, textAlign:'center', fontSize: 20, fontWeight: 'bold', color:'white'}}>
                 Login to your Account
             </Text>

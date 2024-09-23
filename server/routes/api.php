@@ -20,6 +20,7 @@ Route::get('/test', function (Request $request){
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::post('/login', [LoginController::class, 'store']);
+
 Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:sanctum'); 
 
 Route::get('/posts', [PostController::class, 'index'])->middleware('auth:sanctum');
