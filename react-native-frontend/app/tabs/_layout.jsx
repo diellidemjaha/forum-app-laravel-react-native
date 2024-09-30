@@ -5,15 +5,17 @@ import Front from "./Front";
 import Profile from "./Profile";
 import { Ionicons } from '@expo/vector-icons';
 import { UserProvider } from '../../context/UserContext';
+import CreatePost from './CreatePost';
 
 
 
 export default function TabsLayout() {
+
+  console.log(Front, CreatePost, Profile);
   const Tab = createBottomTabNavigator();
   
   return (
     <UserProvider>
-
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
@@ -22,6 +24,10 @@ export default function TabsLayout() {
           iconName = focused
           ? 'home'
           : 'home-outline';
+        }  else if (route.name === 'CreatePost') {
+          iconName = focused 
+          ? 'add-circle' 
+          : 'add-circle-outline'; 
         } else if (route.name === 'Profile') {
           iconName = focused
           ? 'person'
@@ -36,6 +42,7 @@ export default function TabsLayout() {
     })}
     >
       <Tab.Screen name='Front' component={Front} />
+      <Tab.Screen name='CreatePost' component={CreatePost} />
       <Tab.Screen name='Profile' component={Profile} />
     </Tab.Navigator>
       </UserProvider>

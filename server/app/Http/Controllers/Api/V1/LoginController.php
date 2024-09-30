@@ -21,13 +21,14 @@ class LoginController extends Controller
 
             ], 401);
         }
-     $user = Auth::user();
-     $token = $user->createToken('auth_token')-> plainTextToken;
+        $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-     return response()->json([
-        'message' => "User logged in successfully!",
-        'user' => $user,
-        'token'=> $token
-     ]);
+        return response()->json([
+            'message' => "User logged in successfully!",
+            'user' => $user,
+            'token' => $token,
+            'user_id' => Auth::user()->id,
+        ]);
     }
 }

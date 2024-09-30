@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, ScrollView, StyleSheet, FlatList,TextInput, T
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getToken } from '../../services/tokenService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Front() {
 
@@ -10,27 +11,27 @@ export default function Front() {
   const [body, setBody] = useState('');
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getToken();
-        console.log('Token:', res);
+  const fetchData = async () => {
+    try {
+      const res = await getToken();
+      console.log('Token:', res);
 
-        if (res) {
-          const response = await axios.get("http://192.168.178.81:8000/api/posts", {
-            headers: {
-              'Accept': 'application/json',
-              'Authorization': `Bearer ${res}`
-            }
-          });
-          console.log("Fetched Data:", response.data);
-          setData(response.data.posts); // Make sure this contains an array of posts
-        }
-      } catch (e) {
-        console.error("Error fetching data", e);
+      if (res) {
+        const response = await axios.get("http://192.168.178.81:8000/api/posts-of-friends", {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${res}`
+          }
+        });
+        console.log("Fetched Data:", response.data);
+        setData(response.data.posts); // Make sure this contains an array of posts
       }
-    };
-
+    } catch (e) {
+      console.error("Error fetching data", e);
+    }
+  };
+  
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -41,11 +42,22 @@ export default function Front() {
       return;
     }
 
+    
+
     try {
+      const userId = await AsyncStorage.getItem('user_id'); 
       const token = await getToken();
+
+      console.log({
+        user_id: userId, 
+        title: title,
+        body: body,
+      });
+
       const response = await axios.post('http://192.168.178.81:8000/api/post', {
-        title,
-        body
+        title: title,
+        body: body,
+        user_id: userId,
       }, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -149,6 +161,7 @@ const styles = StyleSheet.create({
   borderRadius: 10,
   backgroundColor: '#fff',
   fontSize: 16,
+  margin: 10,
 },
 titleInput: {
   fontSize: 16,
@@ -157,6 +170,7 @@ titleInput: {
   borderBottomWidth: 2,
   borderBottomColor: '#007BFF',  // Blue underline to highlight the title
   paddingBottom: 5,
+  margin: 10,
 },
 // Body input style
 bodyInput: {

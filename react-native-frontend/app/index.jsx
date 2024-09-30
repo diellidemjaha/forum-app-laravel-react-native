@@ -28,17 +28,19 @@ export default function Index() {
 
     return (
         <NavigationContainer independent={true}>
-<Stack.Navigator>
-            {!token ? 
-            <>
-            <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-            <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            
-            </> :
+            <Stack.Navigator>
+                {!token ?
+                    <>
+                        <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
+                        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+                        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
 
-                <Stack.Screen name="Tabs" component={TabsLayout} options={{ headerShown: false }} />
-            }
+
+                    </>
+                    :
+                        <Stack.Screen name="Tabs" component={TabsLayout} options={{ headerShown: false }} />
+                
+                }
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation, useRouter } from 'expo-router';
 import axios from '../../services/api';
 import { setToken } from '../../services/tokenService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
    
@@ -12,6 +13,7 @@ export default function Login() {
     const [password,setPassword]  = useState('');
     const [loading, setLoading] = useState(false);
     const [loginToken, setLoginToken] = useState(null);
+    const [userId, setUserId] = useState(null);
     const [errors, setErrors] = useState({});
 
 
@@ -33,6 +35,15 @@ export default function Login() {
                 setLoading(false);
                 await setToken(response?.data?.token);
                 setLoginToken(response?.data?.token);
+
+                const userId = response?.data?.user?.id;
+                setUserId(userId);
+    
+                // Store user ID in AsyncStorage
+                await AsyncStorage.setItem('user_id', userId.toString());
+    
+                console.log('User ID stored in local storage:', userId);
+
                 router.push('tabs/Profile');
 
             } catch(err) {
